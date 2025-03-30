@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as SC from './Avatar.styles';
 import Image, { ImageProps } from 'next/image';
 

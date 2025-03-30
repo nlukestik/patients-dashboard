@@ -1,4 +1,4 @@
-import type { Patient, Patients } from '@/types/patients';
+import { Patient, Patients as IPatients } from '@/types/patients';
 import * as SC from './Patients.styles';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import PatientCard from './PatientCard';
@@ -10,7 +10,7 @@ import EmptyState from '@/components/EmptyState';
 import { debounce } from '@/utils';
 
 type Props = {
-  patients: Patients;
+  patients: IPatients;
 };
 
 const searchInputProps = { searchInputProps: { placeholder: 'Search patients by ID, Name or Notes' } };
