@@ -9,6 +9,28 @@ export type IconProps = {
 export type IconComponent = React.FC<IconProps>;
 
 export enum FormModesEnum {
-  ADD = 'ADD',
-  EDIT = 'EDIT',
+  ADD = 'add',
+  EDIT = 'edit',
 }
+
+export enum ToastTypesEnum {
+  SUCCESS = 'success',
+  ERROR = 'error',
+}
+
+export enum ToastDurationsEnum {
+  SHORT = 3000,
+  MEDIUM = 5000,
+  LONG = 10000,
+}
+
+export type ToastNotification = {
+  message: string;
+  type: ToastTypesEnum;
+};
+
+export type ToastStylesConfig = {
+  background: string;
+  color: string;
+};
+export type ToastConfigByType = Record<ToastTypesEnum, ToastStylesConfig>;

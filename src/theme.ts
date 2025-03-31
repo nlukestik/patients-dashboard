@@ -14,7 +14,9 @@ const theme: DefaultTheme = {
     primary: '#FFFFFF',
     secondary: '#F8F8F8',
     tertiary: 'rgba(44, 216, 255, 0.12)',
-    disabled: 'E6E6E6',
+    disabled: '#E6E6E6',
+    success: '#16D981',
+    error: '#D9163A',
   },
   border: {
     main: '1px solid #F0F0F0',
@@ -24,7 +26,7 @@ const theme: DefaultTheme = {
   },
   text: {
     grey: '#7F7F7F',
-    disabled: 'B6BFC9',
+    disabled: '#B6BFC9',
   },
   transitions: {
     default: 'all 0.2s ease-in-out',

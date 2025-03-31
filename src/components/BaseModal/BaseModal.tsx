@@ -1,4 +1,4 @@
-import { PropsWithChildren, use, useCallback, useRef } from 'react';
+import { PropsWithChildren, useCallback, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import * as SC from './BaseModal.styles';
 import CloseIcon from '../icons/CloseIcon';

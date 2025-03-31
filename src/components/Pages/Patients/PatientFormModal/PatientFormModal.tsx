@@ -8,12 +8,12 @@ import TextAreaInput from '@/components/TextAreaInput';
 import * as SC from './PatientFormModal.styles';
 import { useCallback } from 'react';
 import { usePatientsStore } from '@/store/patientsStore';
-import { FormModesEnum } from '@/types/common';
+import { FormModesEnum, ToastTypesEnum } from '@/types/common';
 import Avatar from '@/components/Avatar';
 
 type Props = {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (mode?: FormModesEnum, notifType?: ToastTypesEnum) => void;
   patientData?: Patient;
 };
 
@@ -41,7 +41,23 @@ const PatientFormModal = ({ isOpen, onClose, patientData }: Props) => {
     reset();
   }, [onClose, reset]);
 
+  const handleResetValues = useCallback(() => {
+    if (formMode === FormModesEnum.ADD) {
+      reset();
+      return;
+    }
+
+    reset({ [PATIENT_BASE_FORM_NAME]: formValues });
+  }, [formMode, formValues, reset]);
+
   const handleConfirm = useCallback(() => {
+    // Just to try out error notifications
+    if (formValues.id === '9999') {
+      onClose(formMode, ToastTypesEnum.ERROR);
+      handleResetValues();
+      return;
+    }
+
     if (!isValid) {
       trigger(PATIENT_BASE_FORM_NAME);
       return;
@@ -60,25 +76,24 @@ const PatientFormModal = ({ isOpen, onClose, patientData }: Props) => {
 
     if (formMode === FormModesEnum.ADD) {
       addPatient({ ...formValues, createdAt: new Date().toISOString() });
-      reset();
     } else {
       editPatient(patientData?.id as string, formValues);
-      reset({ [PATIENT_BASE_FORM_NAME]: formValues });
     }
 
-    handleClose();
+    handleResetValues();
+    onClose(formMode, ToastTypesEnum.SUCCESS);
   }, [
-    addPatient,
-    exists,
-    editPatient,
-    formMode,
     formValues,
-    reset,
-    handleClose,
     isValid,
+    exists,
     patientData?.id,
+    formMode,
+    onClose,
+    handleResetValues,
     trigger,
     setError,
+    addPatient,
+    editPatient,
   ]);
 
   return (
