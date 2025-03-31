@@ -41,20 +41,11 @@ const PatientFormModal = ({ isOpen, onClose, patientData }: Props) => {
     reset();
   }, [onClose, reset]);
 
-  const handleResetValues = useCallback(() => {
-    if (formMode === FormModesEnum.ADD) {
-      reset();
-      return;
-    }
-
-    reset({ [PATIENT_BASE_FORM_NAME]: formValues });
-  }, [formMode, formValues, reset]);
-
   const handleConfirm = useCallback(() => {
-    // Just to try out error notifications
+    // This if statement is just to try out error notifications
     if (formValues.id === '9999') {
       onClose(formMode, ToastTypesEnum.ERROR);
-      handleResetValues();
+      reset();
       return;
     }
 
@@ -76,11 +67,12 @@ const PatientFormModal = ({ isOpen, onClose, patientData }: Props) => {
 
     if (formMode === FormModesEnum.ADD) {
       addPatient({ ...formValues, createdAt: new Date().toISOString() });
+      reset();
     } else {
       editPatient(patientData?.id as string, formValues);
+      reset({ [PATIENT_BASE_FORM_NAME]: formValues });
     }
 
-    handleResetValues();
     onClose(formMode, ToastTypesEnum.SUCCESS);
   }, [
     formValues,
@@ -89,7 +81,7 @@ const PatientFormModal = ({ isOpen, onClose, patientData }: Props) => {
     patientData?.id,
     formMode,
     onClose,
-    handleResetValues,
+    reset,
     trigger,
     setError,
     addPatient,
